@@ -39,7 +39,7 @@ class _ComparisonPageState extends State<ComparisonPage> {
 
   Future<void> _fetchTopSellingProducts() async {
     final url = Uri.parse(
-        'https://api.mercadolibre.com/sites/MLB/search?q=mais+vendidos');
+        'https://api.mercadolibre.com/sites/MLB/search?q=${widget.productName}&sort=sold_quantity_desc');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

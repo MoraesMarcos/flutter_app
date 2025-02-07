@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'comparison_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 void main() {
@@ -21,7 +20,36 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Image.asset('assets/placeholder.png', width: 1500),
+      ),
     );
   }
 }
@@ -49,9 +77,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<String> carouselImages = [
-    'assets/banner1.jpg', // Substitua com imagens locais do seu projeto
+    'assets/banner1.jpg',
     'assets/banner2.jpg',
-    'assets/banner3.jpg',
+    'assets/banner3.jpg'
   ];
 
   final List<Map<String, String>> featuredProducts = [
@@ -68,6 +96,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('AI Shopping Assistant'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -76,10 +114,6 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Lottie.asset('assets/shopping_animation.json',
-                      height: 150,
-                      errorBuilder: (context, error, stackTrace) =>
-                          Image.asset('assets/placeholder.png', height: 150)),
                   TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
@@ -129,11 +163,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(10)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(imageUrl,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) =>
-                                Image.asset('assets/placeholder.png',
-                                    fit: BoxFit.cover)),
+                        child: Image.asset(imageUrl, fit: BoxFit.cover),
                       ),
                     );
                   },
@@ -162,13 +192,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: const Text(
-                  "© 2024 AI Shopping Assistant - Todos os direitos reservados",
-                  textAlign: TextAlign.center),
-            ),
           ],
         ),
       ),
@@ -187,11 +210,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.asset(product['image']!,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => Image.asset(
-                        'assets/placeholder.png',
-                        fit: BoxFit.cover)),
+                child: Image.asset(product['image']!, fit: BoxFit.cover),
               ),
             ),
             Padding(
