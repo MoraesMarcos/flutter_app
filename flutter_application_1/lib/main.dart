@@ -49,32 +49,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<String> carouselImages = [
-    'https://source.unsplash.com/800x400/?shopping',
-    'https://source.unsplash.com/800x400/?electronics',
-    'https://source.unsplash.com/800x400/?fashion'
+    'assets/banner1.jpg', // Substitua com imagens locais do seu projeto
+    'assets/banner2.jpg',
+    'assets/banner3.jpg',
   ];
 
   final List<Map<String, String>> featuredProducts = [
-    {
-      'title': 'Smartphone XYZ',
-      'image': 'https://source.unsplash.com/300x300/?smartphone'
-    },
-    {
-      'title': 'Laptop ABC',
-      'image': 'https://source.unsplash.com/300x300/?laptop'
-    },
-    {
-      'title': 'Headphones',
-      'image': 'https://source.unsplash.com/300x300/?headphones'
-    },
-    {
-      'title': 'Smartwatch',
-      'image': 'https://source.unsplash.com/300x300/?smartwatch'
-    },
-    {
-      'title': 'Camera Pro',
-      'image': 'https://source.unsplash.com/300x300/?camera'
-    }
+    {'title': 'Smartphone XYZ', 'image': 'assets/smartphone.png'},
+    {'title': 'Laptop ABC', 'image': 'assets/laptop.png'},
+    {'title': 'Headphones', 'image': 'assets/headphones.png'},
+    {'title': 'Smartwatch', 'image': 'assets/smartwatch.png'},
+    {'title': 'Camera Pro', 'image': 'assets/camera.png'}
   ];
 
   @override
@@ -94,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   Lottie.asset('assets/shopping_animation.json',
                       height: 150,
                       errorBuilder: (context, error, stackTrace) =>
-                          Container()),
+                          Image.asset('assets/placeholder.png', height: 150)),
                   TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
@@ -144,10 +129,11 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(10)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
-                        child: Image.network(imageUrl,
+                        child: Image.asset(imageUrl,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) =>
-                                Container(color: Colors.grey)),
+                                Image.asset('assets/placeholder.png',
+                                    fit: BoxFit.cover)),
                       ),
                     );
                   },
@@ -201,10 +187,11 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(product['image']!,
+                child: Image.asset(product['image']!,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) =>
-                        Container(color: Colors.grey)),
+                    errorBuilder: (context, error, stackTrace) => Image.asset(
+                        'assets/placeholder.png',
+                        fit: BoxFit.cover)),
               ),
             ),
             Padding(
