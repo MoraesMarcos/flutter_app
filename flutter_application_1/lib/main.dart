@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'comparison_page.dart'; // Página de comparação de preços
+import 'comparison_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -47,6 +47,35 @@ class _HomePageState extends State<HomePage> {
       );
     }
   }
+
+  final List<String> carouselImages = [
+    'https://source.unsplash.com/800x400/?shopping',
+    'https://source.unsplash.com/800x400/?electronics',
+    'https://source.unsplash.com/800x400/?fashion'
+  ];
+
+  final List<Map<String, String>> featuredProducts = [
+    {
+      'title': 'Smartphone XYZ',
+      'image': 'https://source.unsplash.com/300x300/?smartphone'
+    },
+    {
+      'title': 'Laptop ABC',
+      'image': 'https://source.unsplash.com/300x300/?laptop'
+    },
+    {
+      'title': 'Headphones',
+      'image': 'https://source.unsplash.com/300x300/?headphones'
+    },
+    {
+      'title': 'Smartwatch',
+      'image': 'https://source.unsplash.com/300x300/?smartwatch'
+    },
+    {
+      'title': 'Camera Pro',
+      'image': 'https://source.unsplash.com/300x300/?camera'
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -105,18 +134,21 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             CarouselSlider(
               options: CarouselOptions(height: 200, autoPlay: true),
-              items: [
-                'https://via.placeholder.com/400x200',
-                'https://via.placeholder.com/400x200',
-                'https://via.placeholder.com/400x200'
-              ].map((i) {
+              items: carouselImages.map((imageUrl) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
                       width: MediaQuery.of(context).size.width,
                       margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(color: Colors.amber),
-                      child: Image.network(i, fit: BoxFit.cover),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(imageUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(color: Colors.grey)),
+                      ),
                     );
                   },
                 );
@@ -136,8 +168,9 @@ class _HomePageState extends State<HomePage> {
                     height: 200,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
-                      children:
-                          List.generate(5, (index) => _buildHighlightCard()),
+                      children: featuredProducts
+                          .map((product) => _buildHighlightCard(product))
+                          .toList(),
                     ),
                   ),
                 ],
@@ -156,7 +189,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildHighlightCard() {
+  Widget _buildHighlightCard(Map<String, String> product) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 5,
@@ -166,12 +199,17 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             Expanded(
-              child: Image.network('https://via.placeholder.com/150',
-                  fit: BoxFit.cover),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(product['image']!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Container(color: Colors.grey)),
+              ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Produto Destaque", textAlign: TextAlign.center),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(product['title']!, textAlign: TextAlign.center),
             ),
           ],
         ),
